@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Electro image classification</title>
+  </head>
+
+  <body>
+    <div>
+      <div class="search">
+        <h3 style="color: #ffffff">Electronic component detector</h3>
+      </div>
+
+      <div class="container">
+        <div class="upper-data">
+          <div class="weather-data">
+            <div id="canvas-container"></div>
+            <img
+              id="uploaded-image"
+              style="width: 100%; height: 100%; display: none"
+            />
+            <button id="swithCamera" onclick="toggleCameraBackorFront()">
+              <svg
+                width="35"
+                height="35"
+                viewBox="0 0 35 35"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_1057_1472)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M3.75 13.7998C1.33688 15.1667 0.00375 16.9254 0 18.7498C0 21.1048 1.94812 22.9779 4.6575 24.2436C6.93375 25.3048 9.8775 25.9686 13.125 26.1617V24.2867C10.1213 24.0917 7.425 23.4654 5.4525 22.5429C3.075 21.4329 1.875 20.0192 1.875 18.7498C1.88152 17.7343 2.52944 16.7384 3.75 15.8679V13.7998ZM26.25 13.8017V15.8642C27.4728 16.7363 28.1209 17.7342 28.125 18.7517C28.125 20.0192 26.925 21.4329 24.5475 22.5429C23.4431 23.0586 22.1025 23.4786 20.625 23.7936V25.7248C22.3819 25.3817 23.9794 24.8792 25.3425 24.2436C28.05 22.9779 30 21.1048 30 18.7498C29.9944 16.9273 28.6613 15.1686 26.25 13.8017Z"
+                    fill="#808080"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M13.125 20.625V30L19.6875 25.3125L13.125 20.625Z"
+                    fill="#808080"
+                  />
+                  <path
+                    d="M9.375 0V1.92187C7.96875 1.95562 6.73125 2.05312 5.74125 2.59687C5.01186 3.01369 4.45531 3.67729 4.17187 4.46812C3.8625 5.28937 3.75 6.26812 3.75 7.5V15C3.75 16.2337 3.8625 17.2106 4.17187 18.0319C4.47937 18.855 5.03625 19.5131 5.74125 19.9031C7.15313 20.6831 8.88 20.5969 11.2387 20.625H18.7612C21.12 20.5969 22.8469 20.6812 24.2587 19.9031C24.9888 19.4867 25.5461 18.823 25.83 18.0319C26.1375 17.2106 26.25 16.2319 26.25 15V7.5C26.25 6.26625 26.1375 5.28937 25.8281 4.46812C25.5447 3.67729 24.9881 3.01369 24.2587 2.59687C22.8469 1.81687 21.12 1.90312 18.7612 1.875H13.125V0H9.375ZM11.25 3.75H18.75C21.1106 3.77812 22.6631 3.8625 23.3494 4.24125C23.6944 4.42875 23.8931 4.63875 24.075 5.12625C24.2569 5.61375 24.375 6.39 24.375 7.5V15C24.375 16.11 24.2569 16.8862 24.075 17.3737C23.8913 17.8612 23.6944 18.0694 23.3494 18.2587C22.6631 18.6375 21.1106 18.7219 18.75 18.75H11.25C8.88938 18.7219 7.33125 18.6375 6.64688 18.2587C6.30375 18.0712 6.10875 17.8612 5.925 17.3737C5.74313 16.8862 5.625 16.11 5.625 15V7.5C5.625 6.39 5.74313 5.61375 5.925 5.12625C6.10875 4.63875 6.30375 4.43063 6.64688 4.24125C7.33313 3.8625 8.88938 3.77812 11.25 3.75ZM15 5.625C13.5082 5.625 12.0774 6.21763 11.0225 7.27252C9.96763 8.32742 9.375 9.75816 9.375 11.25C9.375 12.7418 9.96763 14.1726 11.0225 15.2275C12.0774 16.2824 13.5082 16.875 15 16.875C16.4918 16.875 17.9226 16.2824 18.9775 15.2275C20.0324 14.1726 20.625 12.7418 20.625 11.25C20.625 9.75816 20.0324 8.32742 18.9775 7.27252C17.9226 6.21763 16.4918 5.625 15 5.625ZM21.5625 5.625C21.3139 5.625 21.0754 5.72377 20.8996 5.89959C20.7238 6.0754 20.625 6.31386 20.625 6.5625C20.625 6.81114 20.7238 7.0496 20.8996 7.22541C21.0754 7.40123 21.3139 7.5 21.5625 7.5C21.8111 7.5 22.0496 7.40123 22.2254 7.22541C22.4012 7.0496 22.5 6.81114 22.5 6.5625C22.5 6.31386 22.4012 6.0754 22.2254 5.89959C22.0496 5.72377 21.8111 5.625 21.5625 5.625ZM15 7.5C15.9946 7.5 16.9484 7.89509 17.6516 8.59835C18.3549 9.30161 18.75 10.2554 18.75 11.25C18.75 12.2446 18.3549 13.1984 17.6516 13.9017C16.9484 14.6049 15.9946 15 15 15C14.0054 15 13.0516 14.6049 12.3483 13.9017C11.6451 13.1984 11.25 12.2446 11.25 11.25C11.25 10.2554 11.6451 9.30161 12.3483 8.59835C13.0516 7.89509 14.0054 7.5 15 7.5ZM15 9.375C14.5027 9.375 14.0258 9.57254 13.6742 9.92418C13.3225 10.2758 13.125 10.7527 13.125 11.25C13.125 11.7473 13.3225 12.2242 13.6742 12.5758C14.0258 12.9275 14.5027 13.125 15 13.125C15.4973 13.125 15.9742 12.9275 16.3258 12.5758C16.6775 12.2242 16.875 11.7473 16.875 11.25C16.875 10.7527 16.6775 10.2758 16.3258 9.92418C15.9742 9.57254 15.4973 9.375 15 9.375Z"
+                    fill="#808080"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1057_1472">
+                    <rect width="30" height="30" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            <div style="position: absolute; bottom: 1rem">
+              <input
+                type="checkbox"
+                id="darkmode-toggle"
+                onchange="toggleCamera()"
+              />
+              <label for="darkmode-toggle">
+                <svg
+                  version="1.1"
+                  class="sun"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 496 496"
+                  style="enable-background: new 0 0 496 496"
+                  xml:space="preserve"
+                  width="180px"
+                >
+                  <path
+                    d="M84.6 50.5c0-13.8-8.2-25.6-20-31-.1-.1-.2-.1-.3-.2-4.2-1.9-8.9-2.9-13.8-2.9-13.8 0-25.7 8.3-31 20.1 0 .1-.1.2-.1.3-1.9 4.2-2.9 8.8-2.9 13.7 0 13.8 8.2 25.6 20 31 .1.1.2.1.3.1 4.2 1.9 8.9 2.9 13.8 2.9 13.7 0 25.6-8.2 31-19.9.1-.1.1-.2.1-.3 1.8-4.2 2.9-8.9 2.9-13.8zm-4.8 0c0 3-.5 6-1.3 8.8L53.7 34.8 64 24.6c9.3 4.8 15.8 14.6 15.8 25.9zM50.5 63.1L37.9 50.5l12.4-12.4 12.6 12.5-12.4 12.5zm0-41.9c3 0 5.9.5 8.6 1.3L34.5 47.1l-10-10c4.9-9.4 14.7-15.9 26-15.9zM21.2 50.5c0-3 .5-5.9 1.3-8.6l10.3 10.3 14.3 14.3-10 10c-9.4-4.9-15.9-14.7-15.9-26zm29.3 29.3c-3 0-5.9-.5-8.7-1.3L66.3 54l10.1 10c-4.9 9.4-14.6 15.8-25.9 15.8z"
+                  ></path>
+                </svg>
+                <svg
+                  version="1.1"
+                  class="moon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 49.739 49.739"
+                  style="enable-background: new 0 0 49.739 49.739"
+                  xml:space="preserve"
+                  width="50px"
+                >
+                  <path
+                    d="M19,13a1,1,0,0,0-1,1v.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.7L9.41,11.12a2.85,2.85,0,0,0-3.93,0L4,12.6V7A1,1,0,0,1,5,6h7a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V14A1,1,0,0,0,19,13ZM5,20a1,1,0,0,1-1-1V15.43l2.9-2.9a.79.79,0,0,1,1.09,0l3.17,3.17,0,0L15.46,20Zm13-1a.89.89,0,0,1-.18.53L13.31,15l.7-.7a.77.77,0,0,1,1.1,0L18,17.21ZM22.71,4.29l-3-3a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-3,3a1,1,0,0,0,1.42,1.42L18,4.41V10a1,1,0,0,0,2,0V4.41l1.29,1.3a1,1,0,0,0,1.42,0A1,1,0,0,0,22.71,4.29Z"
+                  ></path>
+                </svg>
+              </label>
+            </div>
+            <!-- <button class="" onclick="toggleCamera()">Toggle Camera</button> -->
+            <input
+              id="fileUpload"
+              type="file"
+              accept="image/*"
+              onchange="handleFileUpload(event)"
+              style="position: absolute; top: 1rem; left: 71%"
+            />
+          </div>
+        </div>
+
+        <div class="lower-data">
+          <div class="more-info-label">Component Result</div>
+          <div class="more-info-container" id="more-info-container">
+            <div id="label-container"></div>
+            <!-- Information blocks will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <span
+        >Made By
+        <a
+          class="link"
+          href="https://www.linkedin.com/in/soumya-ranjan-dash-461923216/"
+          >Soumya Ranjan Dash <i class="fa fa-rocket"></i></a
+      ></span>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
+    <script type="text/javascript">
+      // Classifier Variable
+      let classifier;
+      let label;
+      // Model URL
+      let imageModelURL = "./my_model/";
+
+      // Video
+      let video;
+      let flippedVideo;
+      let isCameraOn = true; // Flag to track camera state
+      let videoOptions;
+      let backCamera;
+      document.getElementById("fileUpload").style.display = "none";
+
+      // Load the model first
+      function preload() {
+        classifier = ml5.imageClassifier(imageModelURL + "model.json");
+      }
+
+      function setup() {
+      // Get the list of available video input devices
+      navigator.mediaDevices.enumerateDevices()
+        .then((devices) => {
+          // Get reference to the parent container element (assuming ID is 'canvas-container')
+          const containerDiv = document.getElementById("canvas-container");
+
+          // Calculate the parent container's dimensions (considering padding)
+          const containerWidth = containerDiv.clientWidth;
+          const containerHeight = containerDiv.clientHeight;
+
+          // Create canvas with flexible dimensions based on container size
+          const canvas = createCanvas(containerWidth, containerHeight);
+
+          // Ensure the canvas element is attached to the container
+          canvas.parent("canvas-container");
+
+          // Filter video input devices
+          videoOptions = devices.filter((device) => device.kind === "videoinput");
+
+          // Find the deviceId for the back camera (case-insensitive)
+          backCamera = videoOptions.find((device) =>
+            device.label.toLowerCase().includes("back")
+          );
+
+          // Initialize video capture with constraints
+          let videoConstraints = {
+            video: {
+              facingMode: "environment", // Prefer back camera if supported
+              width: containerWidth, // Set initial width based on container
+              height: containerHeight, // Set initial height based on container
+            },
+            audio: false, // Disable audio capture
+          };
+
+          // Use exact constraint only if backCamera is found (prevents errors)
+          if (backCamera) {
+            videoConstraints.video.deviceId = { exact: backCamera.deviceId };
+          }
+
+          video = createCapture({
+            video: {
+              facingMode: "environment", // Prefer back camera if supported
+              width: width,
+              height: height,
+            },
+            audio: false, // Disable audio capture (optional)
+          });
+
+          video.onloadedmetadata = () => {
+            // Adjust canvas size and draw only after video metadata is loaded
+            canvas.size(video.width, video.height);
+            draw();
+          };
+          video.hide();
+          classifyVideo();
+        })
+        .catch((err) => console.error("Error accessing video devices:", err));
+    }
+
+    function toggleCameraBackorFront() {
+      if (isCameraOn) {
+        const frontCameraConstraint = { video: true }; // Simple constraint for front camera
+        const currentDeviceId = videoOptions.find((device) =>
+          device.label.toLowerCase().includes("back")
+        ) ? { exact: backCamera.deviceId } : frontCameraConstraint;
+
+        video.remove();
+        video = createCapture({
+          video: currentDeviceId,
+          audio: false,
+        });
+        video.hide();
+        classifyVideo();
+      } else {
+        video.pause();
+      }
+    }
+
+      function draw() {
+        background(0);
+        if (isCameraOn && video !== undefined) {
+          image(video, 0, 0);
+        }  
+        // background(0);
+        // // Draw the video if the camera is on
+        // if (isCameraOn && video !== undefined) {
+        //   image(video, 0, 0);
+        // }
+        // // Draw the label
+        // fill(255);
+        // textSize(16);
+        // textAlign(CENTER);
+        // text(label, width / 2, height - 4);
+      }
+
+      // Toggle camera function
+      function toggleCamera() {
+        isCameraOn = !isCameraOn; // Toggle camera state
+        if (isCameraOn) {
+          document.getElementById("swithCamera").style.display = "block";
+          document.getElementById("canvas-container").style.display = "block";
+          document.getElementById("uploaded-image").style.display = "none";
+          document.getElementById("fileUpload").style.display = "none"; // Show video and canvas
+          setup();
+          video.play(); // Start the video stream
+          classifyVideo(); // Start classifying
+        } else {
+          document.getElementById("swithCamera").style.display = "none";
+          document.getElementById("canvas-container").style.display = "none";
+          document.getElementById("uploaded-image").style.display = "block";
+          document.getElementById("fileUpload").style.display = "block"; // Hide video and canvas
+          video.pause(); // Pause the video stream
+          classifyImage();
+        }
+      }
+
+      // Get a prediction for the current video frame
+      function classifyVideo() {
+        if (isCameraOn) {
+          flippedVideo = ml5.flipImage(video);
+          classifier.classify(flippedVideo, gotResult);
+          flippedVideo.remove();
+        }
+      }
+
+      function classifyImage() {
+        imgData = document.getElementById("uploaded-image").src;
+        loadImage(imgData, function (img) {
+          // Draw the image onto a canvas
+          const canvas = createCanvas(200, 200).parent("canvas-container");
+          image(img, 0, 0, canvas.height, canvas.width);
+          // Classify the canvas
+          flippedImage = ml5.flipImage(canvas);
+          classifier.classify(flippedImage, gotResult);
+        });
+      }
+
+      // When we get a result
+      function gotResult(error, results) {
+        // If there is an error or camera is off, do nothing
+        if (error) {
+          // console.log(error);
+          return;
+        }
+        label = results[0].label;
+        confidencePercentage = results[0].confidence * 100;
+        // Display the result in the lower div
+        const labelContainer = document.getElementById("label-container");
+        labelContainer.innerHTML = `<span>${label}</span><span>${confidencePercentage.toFixed(
+          2
+        )}%</span>`;
+        // Classify again!
+        classifyVideo();
+      }
+      // Handle file upload
+      function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            const imgData = reader.result;
+            // Update the source attribute of the img element with the uploaded image data
+            document.getElementById("uploaded-image").src = imgData;
+            classifyImage();
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+    setInterval(classifyVideo, 5000);
+    </script>
+  </body>
+</html>
